@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { PlusCircle, DollarSign, TrendingUp, CreditCard, Bot, AlertTriangle, Info, Calculator } from 'lucide-react';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import api from '../utils/api';
 import DebtCard from '../components/DebtCard';
 
 const COLORS = ['#6366f1', '#a855f7', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#ef4444'];
+const inr = (n) => `₹${n.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
 
 function SummaryCard({ icon: Icon, label, value, color }) {
   return (
@@ -26,8 +27,7 @@ function AlertBanner({ alert }) {
     warning: 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-300',
     info: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300',
   };
-  const icons = { danger: AlertTriangle, warning: AlertTriangle, info: Info };
-  const Icon = icons[alert.type] || Info;
+  const Icon = alert.type === 'info' ? Info : AlertTriangle;
   return (
     <div className={`flex items-start gap-3 border rounded-xl px-4 py-3 ${styles[alert.type]}`}>
       <Icon className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -45,11 +45,11 @@ export default function DashboardPage() {
   useEffect(() => {
     Promise.all([
       api.get('/debts'),
-      api.get('/ai/recommendations').catch(() => ({ data: { alerts: [] } })),
+      api.get('/ai/alerts').catch(() => ({ data: { alerts: [] } })),
     ])
-      .then(([debtsRes, aiRes]) => {
+      .then(([debtsRes, alertsRes]) => {
         setDebts(debtsRes.data);
-        setAlerts(aiRes.data.alerts || []);
+        setAlerts(alertsRes.data.alerts || []);
       })
       .catch(() => toast.error('Failed to load dashboard'))
       .finally(() => setLoading(false));
@@ -66,6 +66,7 @@ export default function DashboardPage() {
   const totalBalance = debts.reduce((s, d) => s + d.balance, 0);
   const totalMin = debts.reduce((s, d) => s + d.minPayment, 0);
   const highestApr = debts.length ? debts.reduce((a, b) => (a.interestRate > b.interestRate ? a : b)) : null;
+  const maxBalance = debts.length ? Math.max(...debts.map((d) => d.balance)) : 0;
 
   const pieData = debts.map((d, i) => ({ name: d.name, value: Math.round(d.balance), color: COLORS[i % COLORS.length] }));
 
@@ -104,8 +105,8 @@ export default function DashboardPage() {
       {debts.length > 0 && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <SummaryCard icon={DollarSign} label="Total Debt" value={`$${totalBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`} color="bg-red-50 dark:bg-red-900/20 text-red-600" />
-            <SummaryCard icon={CreditCard} label="Monthly Minimums" value={`$${totalMin.toLocaleString('en-US', { minimumFractionDigits: 2 })}`} color="bg-orange-50 dark:bg-orange-900/20 text-orange-600" />
+            <SummaryCard icon={DollarSign} label="Total Debt" value={inr(totalBalance)} color="bg-red-50 dark:bg-red-900/20 text-red-600" />
+            <SummaryCard icon={CreditCard} label="Monthly Minimums" value={inr(totalMin)} color="bg-orange-50 dark:bg-orange-900/20 text-orange-600" />
             <SummaryCard icon={TrendingUp} label="Highest APR" value={highestApr ? `${highestApr.interestRate}%` : '—'} color="bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600" />
           </div>
 
@@ -114,10 +115,11 @@ export default function DashboardPage() {
               <h2 className="text-base font-semibold text-gray-900 dark:text-white mb-4">Debt Breakdown</h2>
               <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
-                  <Pie data={pieData} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
+                  <Pie data={pieData} cx="50%" cy="50%" outerRadius={80} dataKey="value"
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
                     {pieData.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                   </Pie>
-                  <Tooltip formatter={(v) => `$${v.toLocaleString()}`} />
+                  <Tooltip formatter={(v) => `₹${v.toLocaleString('en-IN')}`} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -136,7 +138,7 @@ export default function DashboardPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {debts.map((debt) => <DebtCard key={debt._id} debt={debt} onDelete={handleDelete} />)}
+          {debts.map((debt) => <DebtCard key={debt._id} debt={debt} onDelete={handleDelete} maxBalance={maxBalance} />)}
         </div>
       )}
     </div>

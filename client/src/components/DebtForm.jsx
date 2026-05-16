@@ -2,13 +2,24 @@ import { useState } from 'react';
 
 const DEBT_TYPES = [
   { value: 'credit_card', label: 'Credit Card' },
-  { value: 'student_loan', label: 'Student Loan' },
+  { value: 'student_loan', label: 'Student Loan (Education)' },
   { value: 'personal_loan', label: 'Personal Loan' },
-  { value: 'mortgage', label: 'Mortgage' },
-  { value: 'auto_loan', label: 'Auto Loan' },
-  { value: 'medical', label: 'Medical' },
+  { value: 'mortgage', label: 'Home Loan' },
+  { value: 'auto_loan', label: 'Car Loan' },
+  { value: 'medical', label: 'Medical Loan' },
   { value: 'other', label: 'Other' },
 ];
+
+// Average APR in India by loan type
+const AVG_APR = {
+  credit_card: 40,
+  student_loan: 9.5,
+  personal_loan: 14,
+  mortgage: 9,
+  auto_loan: 10,
+  medical: 15,
+  other: 12,
+};
 
 const INITIAL = { name: '', type: 'credit_card', balance: '', interestRate: '', minPayment: '', dueDate: '', notes: '' };
 
@@ -16,7 +27,14 @@ export default function DebtForm({ initialValues = INITIAL, onSubmit, loading, m
   const [form, setForm] = useState({ ...INITIAL, ...initialValues });
   const [error, setError] = useState('');
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const updated = { ...form, [e.target.name]: e.target.value };
+    // Auto-fill interest rate when type changes (only in create mode with empty rate)
+    if (e.target.name === 'type' && mode === 'create' && !form.interestRate) {
+      updated.interestRate = AVG_APR[e.target.value] ?? '';
+    }
+    setForm(updated);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,21 +47,23 @@ export default function DebtForm({ initialValues = INITIAL, onSubmit, loading, m
     onSubmit(form);
   };
 
-  const inputClass = 'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500';
+  const inputClass = 'w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500';
+
+  const avgRate = AVG_APR[form.type];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg">{error}</div>
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm px-4 py-3 rounded-lg">{error}</div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Debt Name *</label>
-          <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder="Chase Sapphire Card" className={inputClass} />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Debt Name *</label>
+          <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder="e.g. HDFC Credit Card" className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Type *</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type *</label>
           <select name="type" value={form.type} onChange={handleChange} className={inputClass}>
             {DEBT_TYPES.map((t) => (
               <option key={t.value} value={t.value}>{t.label}</option>
@@ -51,25 +71,30 @@ export default function DebtForm({ initialValues = INITIAL, onSubmit, loading, m
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Balance ($) *</label>
-          <input type="number" name="balance" value={form.balance} onChange={handleChange} required min="0" step="0.01" placeholder="5000.00" className={inputClass} />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Balance (₹) *</label>
+          <input type="number" name="balance" value={form.balance} onChange={handleChange} required min="0" step="1" placeholder="e.g. 50000" className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Interest Rate (APR %) *</label>
-          <input type="number" name="interestRate" value={form.interestRate} onChange={handleChange} required min="0" max="100" step="0.01" placeholder="24.99" className={inputClass} />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Interest Rate (APR %) *
+            {avgRate && (
+              <span className="ml-2 text-xs text-indigo-500 font-normal">India avg: ~{avgRate}%</span>
+            )}
+          </label>
+          <input type="number" name="interestRate" value={form.interestRate} onChange={handleChange} required min="0" max="100" step="0.01" placeholder={`${avgRate ?? 12}`} className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Min Monthly Payment ($) *</label>
-          <input type="number" name="minPayment" value={form.minPayment} onChange={handleChange} required min="0" step="0.01" placeholder="100.00" className={inputClass} />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Min Monthly Payment (₹) *</label>
+          <input type="number" name="minPayment" value={form.minPayment} onChange={handleChange} required min="0" step="1" placeholder="e.g. 2500" className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Due Date (day of month)</label>
-          <input type="number" name="dueDate" value={form.dueDate} onChange={handleChange} min="1" max="31" placeholder="15" className={inputClass} />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Due Date (day of month)</label>
+          <input type="number" name="dueDate" value={form.dueDate} onChange={handleChange} min="1" max="31" placeholder="e.g. 5" className={inputClass} />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes</label>
         <textarea name="notes" value={form.notes} onChange={handleChange} rows={2} maxLength={500} placeholder="Optional notes…" className={`${inputClass} resize-none`} />
       </div>
 

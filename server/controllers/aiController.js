@@ -2,6 +2,10 @@ const Debt = require('../models/Debt');
 const ChatHistory = require('../models/ChatHistory');
 const aiService = require('../services/aiService');
 
+// In-memory cache: { [userId]: { advice, provider, ts } }
+const recommendationCache = new Map();
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
 exports.getRecommendations = async (req, res, next) => {
   try {
     const debts = await Debt.find({ userId: req.user._id }).sort({ balance: -1 });
@@ -12,11 +16,43 @@ exports.getRecommendations = async (req, res, next) => {
         alerts: [],
       });
     }
+
+    const cacheKey = req.user._id.toString();
+    const cached = recommendationCache.get(cacheKey);
+    if (cached && Date.now() - cached.ts < CACHE_TTL_MS) {
+      return res.json({ advice: cached.advice, provider: cached.provider, alerts: generateAlerts(debts) });
+    }
+
     const advice = await aiService.getDebtAdvice(debts, req.user);
-    const alerts = generateAlerts(debts);
-    res.json({ advice, provider: aiService.getProviderName(), alerts });
+    const provider = aiService.getProviderName();
+    recommendationCache.set(cacheKey, { advice, provider, ts: Date.now() });
+
+    res.json({ advice, provider, alerts: generateAlerts(debts) });
   } catch (err) {
     console.error('AI recommendations error:', err.message);
+    next(err);
+  }
+};
+
+exports.getAlerts = async (req, res, next) => {
+  try {
+    const debts = await Debt.find({ userId: req.user._id });
+    res.json({ alerts: generateAlerts(debts) });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getBudgetAdvice = async (req, res, next) => {
+  try {
+    const { income, expenses, month, year } = req.body;
+    if (!income || !expenses?.length) {
+      return res.status(400).json({ message: 'Save your budget first before requesting advice.' });
+    }
+    const debts = await Debt.find({ userId: req.user._id });
+    const advice = await aiService.getBudgetAdvice({ income, expenses, month, year }, debts, req.user);
+    res.json({ advice, provider: aiService.getProviderName() });
+  } catch (err) {
     next(err);
   }
 };
@@ -84,7 +120,7 @@ function generateAlerts(debts) {
     }
     const monthlyInterest = (d.balance * d.interestRate) / 100 / 12;
     if (monthlyInterest > d.minPayment * 0.8) {
-      alerts.push({ type: 'warning', message: `${d.name}: most of your minimum payment goes to interest ($${monthlyInterest.toFixed(0)}/mo). You may be in a debt trap.` });
+      alerts.push({ type: 'warning', message: `${d.name}: most of your minimum payment goes to interest (₹${monthlyInterest.toFixed(0)}/mo). You may be in a debt trap.` });
     }
   });
 

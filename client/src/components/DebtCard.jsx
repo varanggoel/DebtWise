@@ -3,7 +3,7 @@ import { Pencil, Trash2, Calendar, TrendingUp } from 'lucide-react';
 
 const DEBT_TYPE_LABELS = {
   credit_card: 'Credit Card', student_loan: 'Student Loan', personal_loan: 'Personal Loan',
-  mortgage: 'Mortgage', auto_loan: 'Auto Loan', medical: 'Medical', other: 'Other',
+  mortgage: 'Home Loan', auto_loan: 'Car Loan', medical: 'Medical', other: 'Other',
 };
 
 function AprBadge({ rate }) {
@@ -11,6 +11,8 @@ function AprBadge({ rate }) {
   if (rate >= 10) return <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 font-medium">Moderate</span>;
   return <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-medium">Low Interest</span>;
 }
+
+const inr = (n) => `₹${n.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
 
 export default function DebtCard({ debt, onDelete, maxBalance }) {
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ export default function DebtCard({ debt, onDelete, maxBalance }) {
       </div>
 
       <div className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-        ${debt.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+        {inr(debt.balance)}
       </div>
 
       <div className="mb-4">
@@ -48,7 +50,7 @@ export default function DebtCard({ debt, onDelete, maxBalance }) {
         </div>
         <div className="flex items-center gap-1.5">
           <span className="text-gray-400 text-xs">Min:</span>
-          <span>${debt.minPayment.toLocaleString('en-US', { minimumFractionDigits: 2 })}/mo</span>
+          <span>{inr(debt.minPayment)}/mo</span>
         </div>
         {debt.dueDate && (
           <div className="flex items-center gap-1.5">

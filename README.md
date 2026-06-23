@@ -5,7 +5,7 @@ Avalanche payoff strategies, and budgeting — plus a standalone **Streamlit RAG
 (`rag/`) for AI-powered analysis of financial documents.
 
 This repo was migrated from a MERN stack (Vite + React client / Express server) to a
-single Next.js app following `GUIDE-debt.md`.
+single Next.js app.
 
 ## Stack
 

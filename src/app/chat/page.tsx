@@ -6,7 +6,9 @@ import { auth } from "@/lib/auth";
 export default async function ChatPage() {
   const session = await auth();
   const isAuthenticated = !!session?.user;
-  const url = process.env.NEXT_PUBLIC_STREAMLIT_URL;
+  const base = process.env.NEXT_PUBLIC_STREAMLIT_URL;
+  // Streamlit Cloud redirects in a loop inside iframes unless embed=true is set.
+  const url = base ? `${base}${base.includes("?") ? "&" : "?"}embed=true` : undefined;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">

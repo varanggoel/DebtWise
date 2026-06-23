@@ -1,7 +1,9 @@
 "use client";
 
 export default function AnalyzerPage() {
-  const url = process.env.NEXT_PUBLIC_STREAMLIT_URL;
+  const base = process.env.NEXT_PUBLIC_STREAMLIT_URL;
+  // Streamlit Cloud redirects in a loop inside iframes unless embed=true is set.
+  const url = base ? `${base}${base.includes("?") ? "&" : "?"}embed=true` : undefined;
 
   if (!url) {
     return (

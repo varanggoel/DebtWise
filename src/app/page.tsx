@@ -57,7 +57,7 @@ export default async function LandingPage() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
-            href="/register"
+            href="/chat"
             className="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-semibold text-base transition-colors"
           >
             Start for free <ArrowRight className="w-4 h-4" />

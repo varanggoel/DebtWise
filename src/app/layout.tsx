@@ -5,7 +5,7 @@ import Providers from "@/components/Providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DebtWise — AI Debt Escape Assistant",
+  title: "DebtWise",
   description:
     "Track your debts, simulate Snowball vs Avalanche payoff strategies, and analyze financial documents with AI.",
 };

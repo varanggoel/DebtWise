@@ -1,4 +1,4 @@
-import { TrendingDown, Bot, BarChart2, ShieldCheck, ArrowRight, CheckCircle } from "lucide-react";
+import { TrendingDown, Bot, BarChart2, ArrowRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
 import { auth } from "@/lib/auth";
@@ -7,14 +7,12 @@ const features = [
   { icon: TrendingDown, title: "Debt Tracking", desc: "Track all your debts — credit cards, loans, mortgages — in one clean dashboard." },
   { icon: Bot, title: "AI Analyzer", desc: "Upload statements and loan documents for AI-powered analysis and debt-trap warnings." },
   { icon: BarChart2, title: "Payoff Simulator", desc: "Compare Snowball vs Avalanche strategies and see your exact debt-free date." },
-  { icon: ShieldCheck, title: "Budget Tracker", desc: "Log your monthly income and expenses to find your debt payment surplus." },
 ];
 
 const benefits = [
   "Snowball & Avalanche payoff simulations",
   "AI-powered document analysis",
   "Debt-trap risk detection alerts",
-  "Monthly budget & surplus calculator",
   "Visual charts & payoff timelines",
   "Secure email + Google OAuth login",
 ];
@@ -75,7 +73,7 @@ export default async function LandingPage() {
 
       {/* Features */}
       <section className="max-w-5xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map(({ icon: Icon, title, desc }) => (
             <div key={title} className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
               <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/40 rounded-xl flex items-center justify-center mb-4">

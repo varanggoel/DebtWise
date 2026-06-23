@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, Bot, LogOut, Menu, X, TrendingDown, Calculator, Wallet, Sun, Moon } from "lucide-react";
+import { LayoutDashboard, Bot, LogOut, Menu, X, TrendingDown, Calculator, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -15,7 +15,6 @@ interface NavbarProps {
 const navLinks = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/simulator", label: "Simulator", icon: Calculator },
-  { to: "/budget", label: "Budget", icon: Wallet },
   { to: "/analyzer", label: "AI Analyzer", icon: Bot },
 ];
 

@@ -31,20 +31,6 @@ export interface IUser {
   googleId?: string;
 }
 
-export interface IExpense {
-  category: string;
-  amount: number;
-}
-
-export interface IBudget {
-  _id: string;
-  userId: string;
-  month: number;
-  year: number;
-  income: number;
-  expenses: IExpense[];
-}
-
 export interface DebtAlert {
   type: "danger" | "warning" | "info";
   message: string;

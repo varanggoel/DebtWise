@@ -1,7 +1,7 @@
-# AI Debt Escape Assistant (DebtWise)
+# DebtWise
 
-A single **Next.js 15 + TypeScript** app for tracking debts, simulating Snowball vs
-Avalanche payoff strategies, and budgeting — plus a standalone **Streamlit RAG** app
+A single **Next.js 15 + TypeScript** app for tracking debts and simulating Snowball vs
+Avalanche payoff strategies — plus a standalone **Streamlit RAG** app
 (`rag/`) for AI-powered analysis of financial documents.
 
 ## Stack
@@ -19,12 +19,12 @@ src/
   app/
     (auth)/login, (auth)/register      # auth pages
     (dashboard)/                       # protected layout + pages
-      dashboard, debts/new, debts/[id]/edit, budget, simulator, analyzer
+      dashboard, debts/new, debts/[id]/edit, simulator, analyzer
     api/                               # route handlers
-      auth/[...nextauth], register, debts, debts/[id], budget, simulator, alerts
+      auth/[...nextauth], register, debts, debts/[id], simulator, alerts
   components/                          # Navbar, DebtCard, DebtForm, AlertBanner, providers
   lib/                                 # db, auth, simulator, alerts
-  models/                              # User, Debt, Budget (Mongoose)
+  models/                              # User, Debt (Mongoose)
   types/                               # shared interfaces
 rag/                                   # standalone Streamlit app
 ```

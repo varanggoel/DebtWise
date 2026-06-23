@@ -4,9 +4,6 @@ A single **Next.js 15 + TypeScript** app for tracking debts, simulating Snowball
 Avalanche payoff strategies, and budgeting — plus a standalone **Streamlit RAG** app
 (`rag/`) for AI-powered analysis of financial documents.
 
-This repo was migrated from a MERN stack (Vite + React client / Express server) to a
-single Next.js app.
-
 ## Stack
 
 - **Next.js 15** (App Router) + **TypeScript**
@@ -58,9 +55,7 @@ streamlit run app.py                # http://localhost:8501
 
 ## Notes
 
-- The in-app Node AI services (Gemini/DeepSeek recommendations & chat) were removed and
+- The in-app AI services (Gemini/DeepSeek recommendations & chat) were removed and
   decoupled into the Streamlit analyzer, surfaced via the `/analyzer` iframe page.
 - Dashboard debt-trap alerts are generated server-side in `src/lib/alerts.ts` and served
   from `GET /api/alerts`.
-- The simulator payoff bug (freed minimum-payment rollover) is fixed in
-  `src/lib/simulator.ts`.

@@ -3,9 +3,9 @@ import { AlertTriangle, Info } from "lucide-react";
 import type { DebtAlert } from "@/types";
 
 const styles: Record<DebtAlert["type"], string> = {
-  danger: "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300",
-  warning: "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-300",
-  info: "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300",
+  danger: "bg-red-50 border-red-200 text-red-800",
+  warning: "bg-yellow-50 border-yellow-200 text-yellow-800",
+  info: "bg-blue-50 border-blue-200 text-blue-800",
 };
 
 export default function AlertBanner({ alert }: { alert: DebtAlert }) {

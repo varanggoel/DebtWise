@@ -49,45 +49,45 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Create account</h1>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">Start managing your debt smarter</p>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-gray-900 mb-1">Create account</h1>
+        <p className="text-gray-500 text-sm mb-6">Start managing your debt smarter</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
             <input
               type="text"
               name="name"
               value={form.name}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="Jane Doe"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
               type="email"
               name="email"
               value={form.email}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <input
               type="password"
               name="password"
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="Min 8 characters"
             />
           </div>
@@ -102,17 +102,17 @@ export default function RegisterPage() {
 
         <div className="relative my-5">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200 dark:border-gray-700" />
+            <div className="w-full border-t border-gray-200" />
           </div>
           <div className="relative flex justify-center text-xs text-gray-400">
-            <span className="bg-white dark:bg-gray-800 px-2">or</span>
+            <span className="bg-white px-2">or</span>
           </div>
         </div>
 
         <button
           type="button"
           onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          className="flex items-center justify-center gap-2 w-full border border-gray-300 dark:border-gray-600 rounded-lg py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          className="flex items-center justify-center gap-2 w-full border border-gray-300 rounded-lg py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />

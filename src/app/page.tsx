@@ -22,7 +22,7 @@ export default async function LandingPage() {
   const isAuthenticated = !!session?.user;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white">
       {/* Nav */}
       <nav className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2 font-bold text-indigo-600 text-lg">
@@ -36,7 +36,7 @@ export default async function LandingPage() {
             </Link>
           ) : (
             <>
-              <Link href="/login" className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium">Sign in</Link>
+              <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900 font-medium">Sign in</Link>
               <Link href="/register" className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium">Get started</Link>
             </>
           )}
@@ -45,14 +45,14 @@ export default async function LandingPage() {
 
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-4 pt-20 pb-16 text-center">
-        <span className="inline-block bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full mb-6">
+        <span className="inline-block bg-indigo-50 text-indigo-600 text-xs font-semibold px-3 py-1 rounded-full mb-6">
           AI-Powered Debt Management
         </span>
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
           Get out of debt<br />
           <span className="text-indigo-600">smarter &amp; faster</span>
         </h1>
-        <p className="text-xl text-gray-500 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
+        <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
           DebtWise analyzes your debts, simulates payoff strategies, and uses AI to generate a personalized plan to reach financial freedom.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -64,7 +64,7 @@ export default async function LandingPage() {
           </Link>
           <Link
             href="/login"
-            className="inline-flex items-center justify-center gap-2 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 px-6 py-3 rounded-xl font-semibold text-base transition-colors"
+            className="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 px-6 py-3 rounded-xl font-semibold text-base transition-colors"
           >
             Sign in
           </Link>
@@ -75,12 +75,12 @@ export default async function LandingPage() {
       <section className="max-w-5xl mx-auto px-4 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
-              <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/40 rounded-xl flex items-center justify-center mb-4">
-                <Icon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+            <div key={title} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
+                <Icon className="w-5 h-5 text-indigo-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
+              <h3 className="font-semibold text-gray-900 mb-2">{title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
@@ -111,8 +111,8 @@ export default async function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 dark:border-gray-800 py-8 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} DebtWise · Built with AI
+      <footer className="border-t border-gray-100 py-8 text-center text-sm text-gray-400">
+        © {new Date().getFullYear()} DebtWise
       </footer>
     </div>
   );

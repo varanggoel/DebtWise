@@ -20,12 +20,12 @@ function SummaryCard({ icon: Icon, label, value, color }: {
   color: string;
 }) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+    <div className="bg-white rounded-xl border border-gray-200 p-5">
       <div className={`w-9 h-9 rounded-lg flex items-center justify-center mb-3 ${color}`}>
         <Icon className="w-5 h-5" />
       </div>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{label}</p>
-      <p className="text-2xl font-bold text-gray-900 dark:text-white">{value}</p>
+      <p className="text-sm text-gray-500 mb-1">{label}</p>
+      <p className="text-2xl font-bold text-gray-900">{value}</p>
     </div>
   );
 }
@@ -77,11 +77,11 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Your Debts</h1>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">{debts.length} debt{debts.length !== 1 ? "s" : ""} tracked</p>
+          <h1 className="text-2xl font-bold text-gray-900">Your Debts</h1>
+          <p className="text-gray-500 text-sm mt-0.5">{debts.length} debt{debts.length !== 1 ? "s" : ""} tracked</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => router.push("/simulator")} className="hidden sm:flex items-center gap-2 px-3 py-2 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-sm font-medium transition-colors">
+          <button onClick={() => router.push("/simulator")} className="hidden sm:flex items-center gap-2 px-3 py-2 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-lg text-sm font-medium transition-colors">
             <Calculator className="w-4 h-4" /> Simulate
           </button>
           <button onClick={() => router.push("/analyzer")} className="flex items-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
@@ -102,14 +102,14 @@ export default function DashboardPage() {
       {debts.length > 0 && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <SummaryCard icon={DollarSign} label="Total Debt" value={inr(totalBalance)} color="bg-red-50 dark:bg-red-900/20 text-red-600" />
-            <SummaryCard icon={CreditCard} label="Monthly Minimums" value={inr(totalMin)} color="bg-orange-50 dark:bg-orange-900/20 text-orange-600" />
-            <SummaryCard icon={TrendingUp} label="Highest APR" value={highestApr ? `${highestApr.interestRate}%` : "—"} color="bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600" />
+            <SummaryCard icon={DollarSign} label="Total Debt" value={inr(totalBalance)} color="bg-red-50 text-red-600" />
+            <SummaryCard icon={CreditCard} label="Monthly Minimums" value={inr(totalMin)} color="bg-orange-50 text-orange-600" />
+            <SummaryCard icon={TrendingUp} label="Highest APR" value={highestApr ? `${highestApr.interestRate}%` : "—"} color="bg-yellow-50 text-yellow-600" />
           </div>
 
           {debts.length >= 2 && (
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-base font-semibold text-gray-900 dark:text-white mb-4">Debt Breakdown</h2>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <h2 className="text-base font-semibold text-gray-900 mb-4">Debt Breakdown</h2>
               <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
                   <Pie data={pieData} cx="50%" cy="50%" outerRadius={80} dataKey="value"
@@ -125,10 +125,10 @@ export default function DashboardPage() {
       )}
 
       {debts.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-gray-800 rounded-2xl border border-dashed border-gray-300 dark:border-gray-600">
+        <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
           <CreditCard className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-          <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">No debts yet</h2>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mb-5">Add your first debt to start tracking and getting AI advice.</p>
+          <h2 className="text-lg font-semibold text-gray-700 mb-1">No debts yet</h2>
+          <p className="text-gray-500 text-sm mb-5">Add your first debt to start tracking and getting AI advice.</p>
           <button onClick={() => router.push("/debts/new")} className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium">
             <PlusCircle className="w-4 h-4" /> Add your first debt
           </button>

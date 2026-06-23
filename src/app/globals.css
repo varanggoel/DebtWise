@@ -1,6 +1,47 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+/* Clay/cream color scheme + monospace font, taken from the dc-runtime design.
+   indigo and purple are remapped to the same terracotta scale, and gray to a
+   warm stone scale, so the whole app uses one uniform palette without touching
+   every component. */
+@theme {
+  --font-sans: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* terracotta accent (indigo + purple both map here) */
+  --color-indigo-50: #fbf1eb;
+  --color-indigo-100: #f7e1d3;
+  --color-indigo-200: #f0c9b2;
+  --color-indigo-300: #e8ae90;
+  --color-indigo-400: #e2986f;
+  --color-indigo-500: #e08a6b;
+  --color-indigo-600: #d97757;
+  --color-indigo-700: #bf5c3c;
+  --color-indigo-800: #9a4a30;
+  --color-indigo-900: #6e3420;
+
+  --color-purple-50: #fbf1eb;
+  --color-purple-100: #f7e1d3;
+  --color-purple-200: #f0c9b2;
+  --color-purple-300: #e8ae90;
+  --color-purple-400: #e2986f;
+  --color-purple-500: #e08a6b;
+  --color-purple-600: #d97757;
+  --color-purple-700: #bf5c3c;
+  --color-purple-800: #9a4a30;
+  --color-purple-900: #6e3420;
+
+  /* warm stone neutrals (replaces gray everywhere) */
+  --color-gray-50: #faf6f0;
+  --color-gray-100: #f2ece3;
+  --color-gray-200: #e7ded2;
+  --color-gray-300: #d4c8b8;
+  --color-gray-400: #a89b8a;
+  --color-gray-500: #80776a;
+  --color-gray-600: #635c52;
+  --color-gray-700: #4a443d;
+  --color-gray-800: #2f2b26;
+  --color-gray-900: #211f1c;
+}
 
 * {
   box-sizing: border-box;
@@ -10,6 +51,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   -webkit-font-smoothing: antialiased;
+  background: #faf4ec;
+  color: #2f2b26;
 }

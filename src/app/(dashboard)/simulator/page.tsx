@@ -92,17 +92,17 @@ function MethodSection({ method, label, payoff, interest, cardColor, accentClass
             <div
               onMouseEnter={() => setTipOpen(true)}
               onMouseLeave={() => setTipOpen(false)}
-              className="absolute right-0 top-7 z-30 w-72 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 text-left"
+              className="absolute right-0 top-7 z-30 w-72 bg-white border border-gray-200 rounded-xl shadow-xl p-4 text-left"
             >
-              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-3">{content.body}</p>
+              <p className="text-sm text-gray-700 leading-relaxed mb-3">{content.body}</p>
               <div className="space-y-1 mb-3">
                 {content.pros.map((p) => (
-                  <div key={p} className="flex items-start gap-1.5 text-xs text-gray-600 dark:text-gray-400">
+                  <div key={p} className="flex items-start gap-1.5 text-xs text-gray-600">
                     <span className="text-green-500 mt-px">✓</span>
                     <span>{p}</span>
                   </div>
                 ))}
-                <div className="flex items-start gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                <div className="flex items-start gap-1.5 text-xs text-gray-500">
                   <span className="text-yellow-500 mt-px">~</span>
                   <span>{content.con}</span>
                 </div>
@@ -168,12 +168,12 @@ export default function SimulatorPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Payoff Simulator</h1>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">Compare Snowball vs Avalanche strategies</p>
+        <h1 className="text-2xl font-bold text-gray-900">Payoff Simulator</h1>
+        <p className="text-gray-500 text-sm mt-0.5">Compare Snowball vs Avalanche strategies</p>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      <div className="bg-white rounded-2xl border border-gray-200 p-6">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Extra monthly payment (₹)
         </label>
         <div className="flex gap-3">
@@ -189,7 +189,7 @@ export default function SimulatorPage() {
                 run(v);
               }
             }}
-            className="w-48 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-48 border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="0"
           />
           <button
@@ -211,13 +211,13 @@ export default function SimulatorPage() {
               label="Avalanche"
               payoff={fmtMonths(data.avalanche.months)}
               interest={fmt(data.avalanche.totalInterest)}
-              cardColor="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-800 dark:text-indigo-200 border-indigo-100 dark:border-indigo-800"
+              cardColor="bg-indigo-50 text-indigo-800 border-indigo-100"
               accentClasses={{
-                icon: "text-indigo-500 dark:text-indigo-400",
-                text: "text-indigo-700 dark:text-indigo-300",
-                tag: "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400",
-                iconBtn: "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-200 dark:hover:bg-indigo-900",
-                tipFooter: "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300",
+                icon: "text-indigo-500",
+                text: "text-indigo-700",
+                tag: "bg-indigo-100 text-indigo-600",
+                iconBtn: "bg-indigo-100 text-indigo-600 hover:bg-indigo-200",
+                tipFooter: "bg-indigo-50 text-indigo-700",
               }}
             />
             <MethodSection
@@ -225,29 +225,29 @@ export default function SimulatorPage() {
               label="Snowball"
               payoff={fmtMonths(data.snowball.months)}
               interest={fmt(data.snowball.totalInterest)}
-              cardColor="bg-purple-50 dark:bg-purple-900/20 text-purple-800 dark:text-purple-200 border-purple-100 dark:border-purple-800"
+              cardColor="bg-purple-50 text-purple-800 border-purple-100"
               accentClasses={{
-                icon: "text-purple-500 dark:text-purple-400",
-                text: "text-purple-700 dark:text-purple-300",
-                tag: "bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400",
-                iconBtn: "bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 hover:bg-purple-200 dark:hover:bg-purple-900",
-                tipFooter: "bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300",
+                icon: "text-purple-500",
+                text: "text-purple-700",
+                tag: "bg-purple-100 text-purple-600",
+                iconBtn: "bg-purple-100 text-purple-600 hover:bg-purple-200",
+                tipFooter: "bg-purple-50 text-purple-700",
               }}
             />
           </div>
 
           {data.avalanche.totalInterest < data.snowball.totalInterest && (
-            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl px-5 py-4 flex items-center gap-3">
+            <div className="bg-green-50 border border-green-200 rounded-xl px-5 py-4 flex items-center gap-3">
               <TrendingDown className="w-5 h-5 text-green-600 flex-shrink-0" />
-              <p className="text-sm text-green-800 dark:text-green-300">
+              <p className="text-sm text-green-800">
                 <strong>Avalanche saves you {fmt(data.snowball.totalInterest - data.avalanche.totalInterest)}</strong> in interest compared to Snowball.
               </p>
             </div>
           )}
 
           {chartData.length > 0 && (
-            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-base font-semibold text-gray-900 dark:text-white mb-5">Total Balance Over Time</h2>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <h2 className="text-base font-semibold text-gray-900 mb-5">Total Balance Over Time</h2>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -265,9 +265,9 @@ export default function SimulatorPage() {
       )}
 
       {data && !data.avalanche && (
-        <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-2xl border border-dashed border-gray-300 dark:border-gray-600">
+        <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-300">
           <CreditCard className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500 dark:text-gray-400 text-sm">Add debts on the dashboard first to run a simulation.</p>
+          <p className="text-gray-500 text-sm">Add debts on the dashboard first to run a simulation.</p>
         </div>
       )}
     </div>

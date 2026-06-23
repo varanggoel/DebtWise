@@ -77,23 +77,23 @@ export default function DebtForm({ initialValues, onSubmit, loading, mode = "cre
     onSubmit(form);
   };
 
-  const inputClass = "w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500";
+  const inputClass = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500";
 
   const avgRate = AVG_APR[form.type];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm px-4 py-3 rounded-lg">{error}</div>
+        <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg">{error}</div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Debt Name *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Debt Name *</label>
           <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder="e.g. HDFC Credit Card" className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Type *</label>
           <select name="type" value={form.type} onChange={handleChange} className={inputClass}>
             {DEBT_TYPES.map((t) => (
               <option key={t.value} value={t.value}>{t.label}</option>
@@ -101,11 +101,11 @@ export default function DebtForm({ initialValues, onSubmit, loading, mode = "cre
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Balance (₹) *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Balance (₹) *</label>
           <input type="number" name="balance" value={form.balance} onChange={handleChange} required min="0" step="1" placeholder="e.g. 50000" className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             Interest Rate (APR %) *
             {avgRate && (
               <span className="ml-2 text-xs text-indigo-500 font-normal">India avg: ~{avgRate}%</span>
@@ -114,17 +114,17 @@ export default function DebtForm({ initialValues, onSubmit, loading, mode = "cre
           <input type="number" name="interestRate" value={form.interestRate} onChange={handleChange} required min="0" max="100" step="0.01" placeholder={`${avgRate ?? 12}`} className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Min Monthly Payment (₹) *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Min Monthly Payment (₹) *</label>
           <input type="number" name="minPayment" value={form.minPayment} onChange={handleChange} required min="0" step="1" placeholder="e.g. 2500" className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Due Date (day of month)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Due Date (day of month)</label>
           <input type="number" name="dueDate" value={form.dueDate} onChange={handleChange} min="1" max="31" placeholder="e.g. 5" className={inputClass} />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
         <textarea name="notes" value={form.notes} onChange={handleChange} rows={2} maxLength={500} placeholder="Optional notes…" className={`${inputClass} resize-none`} />
       </div>
 
